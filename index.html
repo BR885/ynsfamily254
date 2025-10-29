@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YNS Family - Drill Dance Community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        dark: '#181818'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white dark:bg-dark text-gray-900 dark:text-white transition-colors duration-300">
+    <!-- Landing Page -->
+    <div id="landingPage" class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-white dark:bg-dark shadow-sm border-b border-gray-200 dark:border-gray-700">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <h1 class="text-2xl font-bold text-primary">YNS Family</h1>
+                        <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Drill Dance Community</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button onclick="showSignIn()" class="text-gray-700 dark:text-gray-300 hover:text-primary">Sign In</button>
+                        <button onclick="showSignUp()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition-colors">Join Now</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="py-20 px-4 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                    Welcome to YNS Family
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
+                    The ultimate drill dance community where passion meets rhythm
+                </p>
+                <p class="text-lg text-gray-500 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+                    Connect with dancers worldwide, share your moves, learn new techniques, and be part of the most vibrant drill dance family on the internet.
+                </p>
+                <button onclick="showSignUp()" class="bg-primary text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-purple-600 transform hover:scale-105 transition-all duration-200">
+                    Start Dancing With Us
+                </button>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-16 px-4 bg-gray-50 dark:bg-gray-900">
+            <div class="max-w-6xl mx-auto">
+                <h3 class="text-3xl font-bold text-center mb-12">Why Join YNS Family?</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center p-6">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-video text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Share Your Moves</h4>
+                        <p class="text-gray-600 dark:text-gray-400">Upload and showcase your best drill dance videos to the community</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Connect & Learn</h4>
+                        <p class="text-gray-600 dark:text-gray-400">Learn from experienced dancers and grow your skills together</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-trophy text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Compete & Win</h4>
+                        <p class="text-gray-600 dark:text-gray-400">Participate in dance battles and community challenges</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Sign In Modal -->
+    <div id="signInModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl max-w-md w-full mx-4">
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-bold text-primary">Welcome Back</h3>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">Sign in to your YNS Family account</p>
+            </div>
+            <form onsubmit="handleSignIn(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Email or Username</label>
+                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-base">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-base">
+                </div>
+                <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-purple-600 transition-colors">
+                    Sign In
+                </button>
+            </form>
+            <div class="text-center mt-4">
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    Don't have an account? 
+                    <button onclick="showSignUp(); hideSignIn()" class="text-primary hover:underline">Sign up here</button>
+                </p>
+            </div>
+            <button onclick="hideSignIn()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div id="signUpModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl max-w-md w-full mx-4">
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-bold text-primary">Join YNS Family</h3>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">Create your dancer profile</p>
+            </div>
+            <form onsubmit="handleSignUp(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Full Name</label>
+                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-base">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Username</label>
+                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-base">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-base">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-base">
+                </div>
+                <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-purple-600 transition-colors">
+                    Create Account
+                </button>
+            </form>
+            <div class="text-center mt-4">
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    Already have an account? 
+                    <button onclick="showSignIn(); hideSignUp()" class="text-primary hover:underline">Sign in here</button>
+                </p>
+            </div>
+            <button onclick="hideSignUp()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main App (Hidden initially) -->
+    <div id="mainApp" class="hidden min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-white dark:bg-dark shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <h1 class="text-xl font-bold text-primary">YNS Family</h1>
+                    </div>
+                    <div class="flex items-center space-x-6">
+                        <!-- Search Bar -->
+                        <div class="relative hidden md:block">
+                            <input type="text" id="searchInput" placeholder="Search videos, users, hashtags..." class="w-80 px-4 py-2 pl-10 pr-4 border border-gray-300 dark:border-gray-600 rounded-full focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-base" onInput="handleSearch(event)">
+                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <button onclick="clearSearch()" id="clearSearchBtn" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Mobile Search Button -->
+                        <button onclick="toggleMobileSearch()" class="md:hidden text-gray-700 dark:text-gray-300 hover:text-primary">
+                            <i class="fas fa-search text-xl"></i>
+                        </button>
+                        
+                        <button onclick="showUploadModal()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition-colors">
+                            <i class="fas fa-plus mr-2"></i>Upload Video
+                        </button>
+                        <div class="relative">
+                            <button onclick="toggleUserMenu()" class="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                                <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                                    <span class="text-white text-sm" id="userInitial">U</span>
+                                </div>
+                                <span id="userName">User</span>
+                            </button>
+                            <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Settings</a>
+                                <button onclick="signOut()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Sign Out</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Search Bar -->
+        <div id="mobileSearchBar" class="bg-white dark:bg-dark border-b border-gray-200 dark:border-gray-700 px-4 py-3 hidden md:hidden">
+            <div class="relative">
+                <input type="text" id="mobileSearchInput" placeholder="Search videos, users, hashtags..." class="w-full px-4 py-2 pl-10 pr-4 border border-gray-300 dark:border-gray-600 rounded-full focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-base" onInput="handleSearch(event)">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <button onclick="clearSearch()" id="mobileClearSearchBtn" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="max-w-4xl mx-auto px-4 py-8">
+            <!-- Community Feed Header -->
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2">Community Feed</h2>
+                <p class="text-gray-600 dark:text-gray-400">Discover amazing drill dance videos from our family</p>
+            </div>
+
+            <!-- Video Feed -->
+            <div id="videoFeed" class="space-y-8">
+                <!-- Sample Video Posts -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-4 flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-white font-semibold">DJ</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">DrillKing_Jay</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">2 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-900 aspect-video flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <i class="fas fa-play-circle text-6xl mb-4 opacity-80"></i>
+                            <p class="text-lg font-semibold">New Drill Combo</p>
+                            <p class="text-sm opacity-80">Click to play video</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="mb-3">Just dropped this fire combo! Who wants to learn? 🔥💃 #DrillDance #YNSFamily</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-6">
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-red-500">
+                                    <i class="far fa-heart"></i>
+                                    <span>127</span>
+                                </button>
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-500">
+                                    <i class="far fa-comment"></i>
+                                    <span>23</span>
+                                </button>
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-green-500">
+                                    <i class="far fa-share"></i>
+                                    <span>Share</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-4 flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-white font-semibold">MQ</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">QueenMoves</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">5 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-900 aspect-video flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <i class="fas fa-play-circle text-6xl mb-4 opacity-80"></i>
+                            <p class="text-lg font-semibold">Tutorial: Basic Drill Steps</p>
+                            <p class="text-sm opacity-80">Perfect for beginners</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="mb-3">Tutorial time! Here's how to master the basic drill steps. Practice makes perfect! 💪 #Tutorial #BeginnerFriendly</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-6">
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-red-500">
+                                    <i class="far fa-heart"></i>
+                                    <span>89</span>
+                                </button>
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-500">
+                                    <i class="far fa-comment"></i>
+                                    <span>15</span>
+                                </button>
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-green-500">
+                                    <i class="far fa-share"></i>
+                                    <span>Share</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Upload Video Modal -->
+    <div id="uploadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl max-w-lg w-full mx-4">
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-bold text-primary">Share Your Moves</h3>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">Upload a video to the YNS Family community</p>
+            </div>
+            <form onsubmit="handleVideoUpload(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Video Title</label>
+                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-base" placeholder="Give your video a catchy title">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Description</label>
+                    <textarea required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-base" rows="3" placeholder="Describe your dance, add hashtags..."></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Video File</label>
+                    <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                        <p class="text-gray-600 dark:text-gray-400 mb-2">Drag and drop your video here</p>
+                        <p class="text-sm text-gray-500">or click to browse</p>
+                        <input type="file" accept="video/*" class="hidden" id="videoInput">
+                    </div>
+                </div>
+                <div class="flex space-x-4">
+                    <button type="button" onclick="hideUploadModal()" class="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 bg-primary text-white py-3 rounded-lg font-semibold hover:bg-purple-600 transition-colors">
+                        Upload Video
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode setup
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // App state
+        let isLoggedIn = false;
+        let currentUser = null;
+        let registeredUsers = []; // Store registered users
+        let allVideos = []; // Store all video posts for searching
+        let filteredVideos = []; // Store filtered search results
+        let currentSearchTerm = ''; // Track current search term
+
+        // Modal functions
+        function showSignIn() {
+            document.getElementById('signInModal').classList.remove('hidden');
+        }
+
+        function hideSignIn() {
+            document.getElementById('signInModal').classList.add('hidden');
+        }
+
+        function showSignUp() {
+            document.getElementById('signUpModal').classList.remove('hidden');
+        }
+
+        function hideSignUp() {
+            document.getElementById('signUpModal').classList.add('hidden');
+        }
+
+        function showUploadModal() {
+            document.getElementById('uploadModal').classList.remove('hidden');
+        }
+
+        function hideUploadModal() {
+            document.getElementById('uploadModal').classList.add('hidden');
+        }
+
+        function toggleUserMenu() {
+            const menu = document.getElementById('userMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Authentication functions
+        function handleSignIn(event) {
+            event.preventDefault();
+            
+            const emailOrUsername = event.target.elements[0].value.toLowerCase();
+            const password = event.target.elements[1].value;
+            
+            // Check if user exists in registered users
+            const existingUser = registeredUsers.find(user => 
+                user.email.toLowerCase() === emailOrUsername || 
+                user.username.toLowerCase() === emailOrUsername
+            );
+            
+            if (!existingUser) {
+                showErrorMessage('Account not found. Please create an account first to join YNS Family!');
+                return;
+            }
+            
+            if (existingUser.password !== password) {
+                showErrorMessage('Incorrect password. Please try again.');
+                return;
+            }
+            
+            // Successful sign in
+            currentUser = {
+                name: existingUser.name,
+                username: existingUser.username,
+                email: existingUser.email
+            };
+            
+            loginUser();
+            hideSignIn();
+            showCustomAlert(`Welcome back, ${currentUser.name}! 🎉`);
+        }
+
+        function handleSignUp(event) {
+            event.preventDefault();
+            
+            // Get form values
+            const name = event.target.elements[0].value.trim();
+            const username = event.target.elements[1].value.trim();
+            const email = event.target.elements[2].value.trim().toLowerCase();
+            const password = event.target.elements[3].value;
+            
+            // Validation
+            if (!name || !username || !email || !password) {
+                showErrorMessage('Please fill in all fields.');
+                return;
+            }
+            
+            // Check if username or email already exists
+            const existingUser = registeredUsers.find(user => 
+                user.email === email || user.username.toLowerCase() === username.toLowerCase()
+            );
+            
+            if (existingUser) {
+                if (existingUser.email === email) {
+                    showErrorMessage('An account with this email already exists. Please use a different email or sign in.');
+                } else {
+                    showErrorMessage('This username is already taken. Please choose a different username.');
+                }
+                return;
+            }
+            
+            // Create new user account
+            const newUser = {
+                name: name,
+                username: username,
+                email: email,
+                password: password,
+                joinDate: new Date().toISOString()
+            };
+            
+            // Add to registered users
+            registeredUsers.push(newUser);
+            
+            // Set as current user
+            currentUser = {
+                name: newUser.name,
+                username: newUser.username,
+                email: newUser.email
+            };
+            
+            loginUser();
+            hideSignUp();
+            showCustomAlert(`Welcome to YNS Family, ${currentUser.name}! 🎉`);
+        }
+
+        function loginUser() {
+            isLoggedIn = true;
+            
+            // Update UI with user info
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userInitial').textContent = currentUser.name.charAt(0).toUpperCase();
+            
+            // Initialize video data and search
+            initializeVideoData();
+            
+            // Show main app, hide landing page
+            document.getElementById('landingPage').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+        }
+
+        // Search functionality
+        function initializeVideoData() {
+            // Populate allVideos with existing posts
+            allVideos = [
+                {
+                    id: 'post1',
+                    title: 'New Drill Combo',
+                    description: 'Just dropped this fire combo! Who wants to learn? 🔥💃 #DrillDance #YNSFamily',
+                    userName: 'DrillKing_Jay',
+                    username: 'drillking_jay',
+                    timestamp: '2 hours ago',
+                    likes: 127,
+                    comments: 23,
+                    hashtags: ['DrillDance', 'YNSFamily']
+                },
+                {
+                    id: 'post2',
+                    title: 'Tutorial: Basic Drill Steps',
+                    description: 'Tutorial time! Here\'s how to master the basic drill steps. Practice makes perfect! 💪 #Tutorial #BeginnerFriendly',
+                    userName: 'QueenMoves',
+                    username: 'queenmoves',
+                    timestamp: '5 hours ago',
+                    likes: 89,
+                    comments: 15,
+                    hashtags: ['Tutorial', 'BeginnerFriendly']
+                }
+            ];
+            filteredVideos = [...allVideos];
+        }
+
+        function handleSearch(event) {
+            const searchTerm = event.target.value.toLowerCase().trim();
+            currentSearchTerm = searchTerm;
+            
+            // Update both search inputs
+            document.getElementById('searchInput').value = searchTerm;
+            document.getElementById('mobileSearchInput').value = searchTerm;
+            
+            // Show/hide clear buttons
+            const clearBtns = ['clearSearchBtn', 'mobileClearSearchBtn'];
+            clearBtns.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (searchTerm) {
+                    btn.classList.remove('hidden');
+                } else {
+                    btn.classList.add('hidden');
+                }
+            });
+            
+            if (!searchTerm) {
+                // Show all videos
+                displaySearchResults([...allVideos]);
+                updateFeedHeader('Community Feed', 'Discover amazing drill dance videos from our family');
+                return;
+            }
+            
+            // Filter videos based on search term
+            const results = allVideos.filter(video => {
+                return (
+                    video.title.toLowerCase().includes(searchTerm) ||
+                    video.description.toLowerCase().includes(searchTerm) ||
+                    video.userName.toLowerCase().includes(searchTerm) ||
+                    video.username.toLowerCase().includes(searchTerm) ||
+                    video.hashtags.some(tag => tag.toLowerCase().includes(searchTerm))
+                );
+            });
+            
+            filteredVideos = results;
+            displaySearchResults(results);
+            updateFeedHeader(`Search Results`, `Found ${results.length} result${results.length !== 1 ? 's' : ''} for "${searchTerm}"`);
+        }
+
+        function displaySearchResults(results) {
+            const feed = document.getElementById('videoFeed');
+            
+            if (results.length === 0) {
+                feed.innerHTML = `
+                    <div class="text-center py-16">
+                        <i class="fas fa-search text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-2">No videos found</h3>
+                        <p class="text-gray-500 dark:text-gray-500">Try searching for different keywords, users, or hashtags</p>
+                        <button onclick="clearSearch()" class="mt-4 text-primary hover:underline">Clear search</button>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Generate HTML for filtered results
+            feed.innerHTML = results.map(video => createVideoPostFromData(video)).join('');
+        }
+
+        function createVideoPostFromData(videoData) {
+            const userInitial = videoData.userName.charAt(0).toUpperCase();
+            const colors = ['from-purple-500 to-pink-500', 'from-blue-500 to-cyan-500', 'from-green-500 to-teal-500', 'from-orange-500 to-red-500'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Highlight search terms in title and description
+            const highlightedTitle = highlightSearchTerm(videoData.title, currentSearchTerm);
+            const highlightedDescription = highlightSearchTerm(videoData.description, currentSearchTerm);
+            const highlightedUserName = highlightSearchTerm(videoData.userName, currentSearchTerm);
+            
+            return `
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-4 flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-r ${randomColor} rounded-full flex items-center justify-center mr-3">
+                            <span class="text-white font-semibold">${userInitial}</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">${highlightedUserName}</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">${videoData.timestamp}</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-900 aspect-video flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <i class="fas fa-play-circle text-6xl mb-4 opacity-80"></i>
+                            <p class="text-lg font-semibold">${highlightedTitle}</p>
+                            <p class="text-sm opacity-80">Click to play video</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="mb-3">${highlightedDescription}</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-6">
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-red-500" onclick="toggleLike(this)">
+                                    <i class="far fa-heart"></i>
+                                    <span>${videoData.likes}</span>
+                                </button>
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-500" onclick="toggleComments('${videoData.id}')">
+                                    <i class="far fa-comment"></i>
+                                    <span>${videoData.comments}</span>
+                                </button>
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-green-500">
+                                    <i class="far fa-share"></i>
+                                    <span>Share</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function highlightSearchTerm(text, searchTerm) {
+            if (!searchTerm || !text) return text;
+            
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<mark class="bg-yellow-200 dark:bg-yellow-600 px-1 rounded">$1</mark>');
+        }
+
+        function clearSearch() {
+            currentSearchTerm = '';
+            document.getElementById('searchInput').value = '';
+            document.getElementById('mobileSearchInput').value = '';
+            
+            // Hide clear buttons
+            document.getElementById('clearSearchBtn').classList.add('hidden');
+            document.getElementById('mobileClearSearchBtn').classList.add('hidden');
+            
+            // Show all videos
+            displaySearchResults([...allVideos]);
+            updateFeedHeader('Community Feed', 'Discover amazing drill dance videos from our family');
+        }
+
+        function toggleMobileSearch() {
+            const mobileSearchBar = document.getElementById('mobileSearchBar');
+            mobileSearchBar.classList.toggle('hidden');
+            
+            // Focus on mobile search input when opened
+            if (!mobileSearchBar.classList.contains('hidden')) {
+                setTimeout(() => {
+                    document.getElementById('mobileSearchInput').focus();
+                }, 100);
+            }
+        }
+
+        function updateFeedHeader(title, subtitle) {
+            const header = document.querySelector('main .text-center');
+            if (header) {
+                header.innerHTML = `
+                    <h2 class="text-3xl font-bold mb-2">${title}</h2>
+                    <p class="text-gray-600 dark:text-gray-400">${subtitle}</p>
+                `;
+            }
+        }
+
+        // Like functionality
+        function toggleLike(button) {
+            const icon = button.querySelector('i');
+            const countSpan = button.querySelector('span');
+            const currentCount = parseInt(countSpan.textContent);
+            
+            if (icon.classList.contains('far')) {
+                // Like the post
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                button.classList.remove('text-gray-600', 'dark:text-gray-400');
+                button.classList.add('text-red-500');
+                countSpan.textContent = currentCount + 1;
+            } else {
+                // Unlike the post
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                button.classList.remove('text-red-500');
+                button.classList.add('text-gray-600', 'dark:text-gray-400');
+                countSpan.textContent = currentCount - 1;
+            }
+        }
+
+        // Comment functionality
+        function toggleComments(postId) {
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            if (commentsSection) {
+                commentsSection.classList.toggle('hidden');
+            }
+        }
+
+        function signOut() {
+            isLoggedIn = false;
+            currentUser = null;
+            
+            // Show landing page, hide main app
+            document.getElementById('landingPage').classList.remove('hidden');
+            document.getElementById('mainApp').classList.add('hidden');
+            
+            // Hide user menu
+            document.getElementById('userMenu').classList.add('hidden');
+        }
+
+        function handleVideoUpload(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const title = event.target.elements[0].value;
+            const description = event.target.elements[1].value;
+            
+            // Create new video post
+            const videoPost = createVideoPost(currentUser.name, currentUser.username, title, description);
+            
+            // Add to feed
+            const feed = document.getElementById('videoFeed');
+            feed.insertAdjacentHTML('afterbegin', videoPost);
+            
+            // Reset form and close modal
+            event.target.reset();
+            hideUploadModal();
+            
+            // Show success message
+            showCustomAlert('Video uploaded successfully! 🎉');
+        }
+
+        function createVideoPost(userName, username, title, description) {
+            const userInitial = userName.charAt(0).toUpperCase();
+            const colors = ['from-purple-500 to-pink-500', 'from-blue-500 to-cyan-500', 'from-green-500 to-teal-500', 'from-orange-500 to-red-500'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            return `
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-4 flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-r ${randomColor} rounded-full flex items-center justify-center mr-3">
+                            <span class="text-white font-semibold">${userInitial}</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">${userName}</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Just now</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-900 aspect-video flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <i class="fas fa-play-circle text-6xl mb-4 opacity-80"></i>
+                            <p class="text-lg font-semibold">${title}</p>
+                            <p class="text-sm opacity-80">Click to play video</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="mb-3">${description}</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-6">
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-red-500">
+                                    <i class="far fa-heart"></i>
+                                    <span>0</span>
+                                </button>
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-500">
+                                    <i class="far fa-comment"></i>
+                                    <span>0</span>
+                                </button>
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-green-500">
+                                    <i class="far fa-share"></i>
+                                    <span>Share</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showCustomAlert(message) {
+            const alert = document.createElement('div');
+            alert.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            alert.textContent = message;
+            document.body.appendChild(alert);
+            
+            // Animate in
+            setTimeout(() => {
+                alert.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                alert.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(alert);
+                }, 300);
+            }, 3000);
+        }
+
+        function showErrorMessage(message) {
+            const alert = document.createElement('div');
+            alert.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            alert.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            document.body.appendChild(alert);
+            
+            // Animate in
+            setTimeout(() => {
+                alert.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Remove after 5 seconds (longer for error messages)
+            setTimeout(() => {
+                alert.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(alert);
+                }, 300);
+            }, 5000);
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.getElementById('userMenu');
+            const userButton = event.target.closest('button');
+            
+            if (!userButton || !userButton.onclick || userButton.onclick.toString().indexOf('toggleUserMenu') === -1) {
+                userMenu.classList.add('hidden');
+            }
+        });
+
+        // File upload styling
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadArea = document.querySelector('.border-dashed');
+            const fileInput = document.getElementById('videoInput');
+            
+            uploadArea.addEventListener('click', () => fileInput.click());
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('border-primary', 'bg-purple-50', 'dark:bg-purple-900');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('border-primary', 'bg-purple-50', 'dark:bg-purple-900');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('border-primary', 'bg-purple-50', 'dark:bg-purple-900');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    uploadArea.querySelector('p').textContent = `Selected: ${files[0].name}`;
+                }
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    uploadArea.querySelector('p').textContent = `Selected: ${e.target.files[0].name}`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
