@@ -709,7 +709,73 @@
             const commentsSection = document.getElementById(`comments-${postId}`);
             if (commentsSection) {
                 commentsSection.classList.toggle('hidden');
+                
+                // Update user initial if logged in
+                if (isLoggedIn && currentUser) {
+                    const userInitial = document.getElementById(`comment-user-initial-${postId}`);
+                    if (userInitial) {
+                        userInitial.textContent = currentUser.name.charAt(0).toUpperCase();
+                    }
+                }
             }
+        }
+
+        function addComment(event, postId) {
+            event.preventDefault();
+            
+            if (!isLoggedIn || !currentUser) {
+                showErrorMessage('Please sign in to comment');
+                return;
+            }
+            
+            const form = event.target;
+            const commentText = form.querySelector('input').value.trim();
+            
+            if (!commentText) return;
+            
+            // Create comment element
+            const userInitial = currentUser.name.charAt(0).toUpperCase();
+            const colors = ['from-purple-500 to-pink-500', 'from-blue-500 to-cyan-500', 'from-green-500 to-teal-500', 'from-orange-500 to-red-500'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            const commentHtml = `
+                <div class="flex space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-r ${randomColor} rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-white text-xs font-semibold">${userInitial}</span>
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-gray-100 dark:bg-gray-700 rounded-lg px-3 py-2">
+                            <p class="font-semibold text-sm">${currentUser.name}</p>
+                            <p class="text-sm">${commentText}</p>
+                        </div>
+                        <div class="flex items-center space-x-4 mt-1 text-xs text-gray-500">
+                            <span>now</span>
+                            <button class="hover:text-blue-500">Like</button>
+                            <button class="hover:text-blue-500">Reply</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add comment to the comments list
+            const commentsList = document.getElementById(`comments-list-${postId}`);
+            if (commentsList) {
+                commentsList.insertAdjacentHTML('beforeend', commentHtml);
+            }
+            
+            // Update comment count
+            const commentButton = document.querySelector(`button[onclick="toggleComments('${postId}')"]`);
+            if (commentButton) {
+                const countSpan = commentButton.querySelector('span');
+                const currentCount = parseInt(countSpan.textContent) || 0;
+                countSpan.textContent = currentCount + 1;
+            }
+            
+            // Clear the input
+            form.querySelector('input').value = '';
+            
+            // Show success
+            showCustomAlert('Comment added! 💬');
         }
 
         function signOut() {
@@ -730,9 +796,48 @@
             // Get form data
             const title = event.target.elements[0].value;
             const description = event.target.elements[1].value;
+            const fileInput = document.getElementById('videoInput');
             
-            // Create new video post
-            const videoPost = createVideoPost(currentUser.name, currentUser.username, title, description);
+            // Check if a video file was selected
+            if (!fileInput.files || fileInput.files.length === 0) {
+                showErrorMessage('Please select a video file to upload.');
+                return;
+            }
+            
+            const videoFile = fileInput.files[0];
+            
+            // Validate file type
+            if (!videoFile.type.startsWith('video/')) {
+                showErrorMessage('Please select a valid video file.');
+                return;
+            }
+            
+            // Create video URL for playback
+            const videoURL = URL.createObjectURL(videoFile);
+            
+            // Extract hashtags from description
+            const hashtags = extractHashtags(description);
+            
+            // Create new video data object
+            const newVideo = {
+                id: 'post-' + Date.now(),
+                title: title,
+                description: description,
+                userName: currentUser.name,
+                username: currentUser.username,
+                timestamp: 'Just now',
+                likes: 0,
+                comments: 0,
+                hashtags: hashtags,
+                videoURL: videoURL,
+                fileName: videoFile.name
+            };
+            
+            // Add to allVideos array for search functionality
+            allVideos.unshift(newVideo);
+            
+            // Create new video post with actual video
+            const videoPost = createVideoPostWithVideo(newVideo);
             
             // Add to feed
             const feed = document.getElementById('videoFeed');
@@ -742,8 +847,106 @@
             event.target.reset();
             hideUploadModal();
             
+            // Reset file input display
+            const uploadArea = document.querySelector('.border-dashed p');
+            uploadArea.textContent = 'Drag and drop your video here';
+            
             // Show success message
             showCustomAlert('Video uploaded successfully! 🎉');
+        }
+        
+        function extractHashtags(text) {
+            const hashtagRegex = /#[\w]+/g;
+            const matches = text.match(hashtagRegex);
+            return matches ? matches.map(tag => tag.slice(1)) : [];
+        }
+
+        function createVideoPostWithVideo(videoData) {
+            const userInitial = videoData.userName.charAt(0).toUpperCase();
+            const colors = ['from-purple-500 to-pink-500', 'from-blue-500 to-cyan-500', 'from-green-500 to-teal-500', 'from-orange-500 to-red-500'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const videoId = 'video-' + videoData.id;
+            
+            return `
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-4 flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-r ${randomColor} rounded-full flex items-center justify-center mr-3">
+                            <span class="text-white font-semibold">${userInitial}</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">${videoData.userName}</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">${videoData.timestamp}</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Video Player -->
+                    <div class="relative aspect-video bg-black">
+                        <video 
+                            id="${videoId}"
+                            class="w-full h-full"
+                            controls
+                            preload="metadata"
+                            poster=""
+                        >
+                            <source src="${videoData.videoURL}" type="video/mp4">
+                            <source src="${videoData.videoURL}" type="video/webm">
+                            <source src="${videoData.videoURL}" type="video/quicktime">
+                            Your browser does not support the video tag.
+                        </video>
+                        
+                        <!-- Video Title Overlay -->
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                            <h4 class="text-white font-semibold text-lg">${videoData.title}</h4>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4">
+                        <p class="mb-3">${videoData.description}</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-6">
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-red-500" onclick="toggleLike(this)">
+                                    <i class="far fa-heart"></i>
+                                    <span>${videoData.likes}</span>
+                                </button>
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-500" onclick="toggleComments('${videoData.id}')">
+                                    <i class="far fa-comment"></i>
+                                    <span>${videoData.comments}</span>
+                                </button>
+                                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-green-500">
+                                    <i class="far fa-share"></i>
+                                    <span>Share</span>
+                                </button>
+                            </div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400">
+                                <i class="fas fa-file-video mr-1"></i>
+                                ${videoData.fileName}
+                            </div>
+                        </div>
+                        
+                        <!-- Comments Section -->
+                        <div id="comments-${videoData.id}" class="mt-4 border-t border-gray-200 dark:border-gray-700 pt-4 hidden">
+                            <!-- Comments will be added here -->
+                            <div class="space-y-3 mb-4" id="comments-list-${videoData.id}">
+                            </div>
+                            
+                            <!-- Add Comment Form -->
+                            <div class="flex space-x-3">
+                                <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white text-xs font-semibold">${currentUser.name.charAt(0).toUpperCase()}</span>
+                                </div>
+                                <div class="flex-1">
+                                    <form onsubmit="addComment(event, '${videoData.id}')" class="flex space-x-2">
+                                        <input type="text" placeholder="Add a comment..." required class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-full focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-sm">
+                                        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-full hover:bg-purple-600 transition-colors text-sm">
+                                            Post
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         function createVideoPost(userName, username, title, description) {
