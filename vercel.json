@@ -1,0 +1,8 @@
+Erro ao inicializar o i18next: [
+  [Error: ENOENT: no such file or directory, open '/var/task/src/server/app/locales/en.json'] {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/var/task/src/server/app/locales/en.json'
+  }
+]
